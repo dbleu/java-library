@@ -189,8 +189,9 @@ Check the [Javadoc](https://DiscordBotlistEU.github.io/java-library), examples, 
 > See [Listening to Events](#listening-to-events)
 
 ## Catch votes with webhooks
+You need to catch the votes of your bot with webhooks. We show you how you can receive these
 ### Using integrated webhook webserver
-If you want to catch votes with our webhoom implementation, you need to follow these steps:
+If you want to catch votes with our webhook implementation, you need to follow these steps:
 1. Go to [dev.discord-botlist.eu](https://dev.discord-botlist.eu) and login with you discord account.
 2. Click on your bot
 3. Scroll down to "Webhook-URL" and paste the following: `<ip>:2526/webhook`
