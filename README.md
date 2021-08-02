@@ -107,6 +107,58 @@ public static void printVotes(DblEu api) {
 }
 ```
 
+## Checking ratelimits
+You can work with a Ratelimtmanager to prevent temporary bans
+
+## Catching Exceptions
+```java
+@Override
+public void onReady(ReadyEvent event) {
+   int servers = 0;
+   DataBuilder dataBuilder = new DataBuilder()
+      .setServers(servers);
+   try {
+      event.getDblEu().postData(dataBuilder.build()).queue((consumer) -> {
+         System.out.println("Sent data");
+      });
+   } catch(RatelimitReachedException ex) {
+      System.out.println("Could not send data");
+   }
+}
+```
+
+## Using the Throwable of the `.queue()`
+```java
+@Override
+public void onReady(ReadyEvent event) {
+   int servers = 0;
+   PostData postData = new DataBuilder()
+      .setServers(servers)
+      .build();
+   event.getDblEu().postData(postData).queue((consumer) -> {
+      System.out.println("Sent data");
+   },
+   (throwable) -> {
+      System.out.println("Could not send data");
+   });
+}
+```
+
+## Using the manager
+```java
+@Override
+public void onReady(ReadyEvent event) {
+   RatelimitManager manager = event.getDblEu().getRatelimitManager();
+   if(manager.postData().getAvailableRequests() != 0) event.getDblEu().postData(
+      new DataBuilder()
+         .setServers(0)
+         .build()
+      ).queue((consumer) -> {
+         System.out.println("Sent data");
+      }); else System.out.println("Could not send data");
+}
+```
+
 ## API Key and ID
 The API Key and the ID are required parameter of the library to tell the API who you are.
 
