@@ -32,6 +32,7 @@ The API requires an API Key and an id
 DblEu api = new DblEu.Builder()
         .setAPIKey("key") //Setting the API Keys
         .setId("id") //Setting the client id
+        .enableWebhookServer(true) //create webserver for webhooks, if you do not need one, replace true with false
         .build(); //Build the object
 ````
 
@@ -87,6 +88,19 @@ DblEu api = new DblEu.Builder()
         .build(); //Build the object
 ````
 > See [Creating the DBLEU-Object](#creating-the-dbleu-object)
+
+## Fetching votes
+You can also fetch all current votes
+```java
+public static void printVotes(DblEu api) {
+   api.fetchVotes().queue((votes) -> {
+      System.out.println("All votes:");
+      for(Vote v : votes) System.out.println("   - by "+v.getVoter().getName()+" at "+v.getTime());
+      if(votes.size() == 0) System.out.println("There are no votes");
+   },
+   (e) -> e.printStackTrace());
+}
+```
 
 ## API Key and ID
 The API Key and the ID are required parameter of the library to tell the API who you are.
