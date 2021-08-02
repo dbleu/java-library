@@ -30,3 +30,5 @@ Closes Issue: NaN
 ## Description
 
 Replace this sentence with general description of what your Pull Request does.
+
+<!-- This file is copied (and edited) from https://github.com/dv8fromtheworld/jda -->
