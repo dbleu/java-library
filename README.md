@@ -36,15 +36,15 @@ DblEu api = new DblEu.Builder()
 ````
 
 ## Listening to events
-You can catch events with their interfaces. Implement the interface for the event you want to catch and override the `onEvent()` method.
+You can catch events by overwriting their function
 
 **Example**
 ````java
-public class DblEuEvents implements ReadyEvent { //Implement the ReadyEvent interface
+public class DblEuEvents extends DblEuListerns { //Extend all event listeners from the DblEuListerns class
     
-    //Override the onEvent method of readyevent
+    //Ready event
     @Override
-    public void onEvent(ReadyEventInstance event) {
+    public void onReady(ReadyEvent event) {
         event.printInfo(); //Printing ready information
         System.out.println("Version of Library: " + event.getDblEu().version()); //Printing the Library-Version
     }
@@ -52,22 +52,22 @@ public class DblEuEvents implements ReadyEvent { //Implement the ReadyEvent inte
 }
 ````
 
-You can also use two event listeners. Just set a `,` behind the first interface and write the interface name of another event interface
+You can also use two event listeners. Just set overwrite another function
 
 **Example**
 ````java
-public class DblEuEvents implements ReadyEvent, VoteEvent { //Implement the ReadyEvent interface and VoteEvent Interface
+public class DblEuEvents extends DblEuListerns { //Extend all event listeners from the DblEuListerns class
 
-    //Override the onEvent method of readyevent
+    //Ready event
     @Override
-    public void onEvent(ReadyEventInstance event) {
+    public void onReady(ReadyEvent event) {
         event.printInfo(); //Printing ready information
         System.out.println("Version of Library: " + event.getDblEu().version()); //Printing the Library-Version
     }
 
-    //Override the onEvent method of voteevent
+    //Vote event
     @Override
-    public void onEvent(VoteEventInstance event) {
+    public void onVote(VoteEvent event) {
         System.out.println("Received a vote from " + event.getVote().getVoter().getName() + " (" + event.getVote().getVoter().getId() + ")"); //Printing information
     }
 
@@ -82,8 +82,8 @@ You need to register all of these events when before you create the `DblEu.Build
 DblEu api = new DblEu.Builder()
         .setAPIKey("key") //Setting the API Keys
         .setId("id") //Setting the client id
-        .addReadyEvent(new DblEuEvents()) //Add the readyevent listener
-        .addVoteEvent(new DblEuEvents()) //Add the voteevent listener
+        .addEventListener(new DblEuEvents()) //Add the readyevent listener
+        .addEventListener(new DblEuEvents()) //Add the voteevent listener
         .build(); //Build the object
 ````
 > See [Creating the DBLEU-Object](#creating-the-dbleu-object)
