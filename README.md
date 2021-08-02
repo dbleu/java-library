@@ -36,7 +36,6 @@ The API requires an API Key and an id
 DblEu api = new DblEu.Builder()
         .setAPIKey("key") //Setting the API Keys
         .setId("id") //Setting the client id
-        .enableWebhookServer(true) //create webserver for webhooks, if you do not need one, replace true with false
         .build(); //Build the object
 ````
 
@@ -91,7 +90,18 @@ DblEu api = new DblEu.Builder()
         .addEventListener(new DblEuEvents()) //Add the voteevent listener
         .build(); //Build the object
 ````
-> See [Creating the DBLEU-Object](#creating-the-dbleu-object)
+> See [Creating the DblEu-Object](#creating-the-dbleu-object)
+
+## Post data
+```java
+DblEu api = ...;
+PostData postData = new DataBuilder()
+   .setServers(servers)
+   .build();
+api.postData(postData).queue((consumer) -> {
+   System.out.println("Sent data");
+});
+```
 
 ## Fetching votes
 You can also fetch all current votes
@@ -127,6 +137,7 @@ public void onReady(ReadyEvent event) {
    }
 }
 ```
+> See [Listening to events](#listening-to-events), [Post data](#post-data)
 
 ### Using the Throwable of the `.queue()`
 ```java
@@ -144,6 +155,7 @@ public void onReady(ReadyEvent event) {
    });
 }
 ```
+> See [Listening to events](#listening-to-events), [Post data](#post-data)
 
 ### Using the manager
 ```java
@@ -159,17 +171,59 @@ public void onReady(ReadyEvent event) {
       }); else System.out.println("Could not send data");
 }
 ```
+> See [Listening to events](#listening-to-events), [Post data](#post-data)
+
+## Simulate Events
+You can simulate events to test features etc.
+
+**Example**
+```java
+api.simulateEvent(ReadyEvent.class, api.getSimulationBuilder().build()).queue((event) -> {
+   System.out.println("Version of simulated ready event: "+event.getDblEu().version());
+})
+```
+Check the [Javadoc](https://DiscordBotlistEU.github.io/java-library), examples, wiki or ask on the Discord Server if you don't know which methods you need to use at the builder.
+> See [Listening to Events](#listening-to-events)
+
+## Catch votes with webhooks
+### Using integrated webhook webserver
+If you want to catch votes with our webhoom implementation, you need to follow these steps:
+1. Go to [dev.discord-botlist.eu](https://dev.discord-botlist.eu) and login with you discord account.
+2. Click on your bot
+3. Scroll down to "Webhook-URL" and paste the following: `<ip>:2526/webhook`
+   - **Note:** You need to replace `<ip>` with your IP-Address
+4. Add `.enableWebhooks(true)` to the builder
+   - **Example**
+      ```java
+         DblEu api = new DblEu.Builder()
+           .setAPIKey("key") //Setting the API Keys
+           .setId("id") //Setting the client id
+           .enableWebhooks(true) //enable webhooks
+           .build(); //Build the object
+      ```
+      > See [Creating the DblEu-Object](#creating-the-dbleu-object)
+
+### Using your own webserver
+If you want to use your own webserver, you can simulate a VoteEvent
+
+**Example**
+```java
+DblEu api = ...;
+String body = "...";
+api.simulateEvent(VoteEvent.class, api.getSimulationBuilder().setBody(body).build()).queue((event) -> {
+   System.out.println("Received a vote from " + event.getVote().getVoter().getName() + " (" + event.getVote().getVoter().getId() + ")"); //Printing information
+})
+```
+> See [Simulate Events](#simulate-events), [Listening to events](#listening-to-events)
 
 ## API Key and ID
 The API Key and the ID are required parameter of the library to tell the API who you are.
 
 ### API Key
 Follow these steps to get your bots API Key:
-1. Go to [discord-botlist.eu](https://discord-botlist.eu) and login with you discord account.
-2. Refresh the page. When it's your discord name and avatar in the top right, press it
-3. Choose your bot and click the "Show" buttom at the bottom of its card
-4. Click on the "Edit" button under the "Developer"-Tag
-5. Scroll down until you can see the "API-Token" headline. Copy the text of the textline below
+1. Go to [dev.discord-botlist.eu](https://dev.discord-botlist.eu) and login with you discord account.
+2. Click on your bot
+3. Scroll down to "API-Key" and click the "Copy"-Button
 
 ### ID
 1. Go to the [discord developer portal](https://discord.com/developers) and go to the setting of your bot. 
