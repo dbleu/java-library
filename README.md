@@ -1,3 +1,5 @@
+### ⚠️ Pull requests will all get rejected at the moment!
+
 [discord-invite]: https://discord.gg/2Pang7t9vr
 [license]: https://github.com/MauricePascal/DblEu-java/blob/main/LICENSE
 [faq]: https://github.com/DV8FromTheWorld/JDA/wiki/10\)-FAQ
@@ -17,13 +19,13 @@
 DblEu-java is the official Java library of discord-botlist.eu
 
 ## Table of contents
-1. [Creating the DBLEU-Object](#creating-the-dbleu-object)
+1. [Creating the DblEu-Object](#creating-the-dbleu-object)
 2. [Listening to events](#listening-to-events)
 3. [Fetching votes](#fetching-votes)
 4. [API Key and ID](#api-key-and-id)
 5. [License](#license)
 
-## Creating the DBLEU Object
+## Creating the DblEu Object
 To use the library, you must first create the `DblEu.Builder()` object.
 The API requires an API Key and an id
 > See [API Key and ID](#api-key-and-id)
