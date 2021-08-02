@@ -21,8 +21,11 @@ DblEu-java is the official Java library of discord-botlist.eu
 ## Table of contents
 1. [Creating the DblEu-Object](#creating-the-dbleu-object)
 2. [Listening to events](#listening-to-events)
+3. [Post data](#post-data)
 3. [Fetching votes](#fetching-votes)
 4. [Working with RatelimitManagers](#working-with-ratelimitmanagers)
+5. [Simulate Events](#simulate-events)
+6. [Catch votes with webhooks](#catch-votes-with-webhooks)
 5. [API Key and ID](#api-key-and-id)
 6. [License](#license)
 
