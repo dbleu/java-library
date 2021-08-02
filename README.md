@@ -22,8 +22,9 @@ DblEu-java is the official Java library of discord-botlist.eu
 1. [Creating the DblEu-Object](#creating-the-dbleu-object)
 2. [Listening to events](#listening-to-events)
 3. [Fetching votes](#fetching-votes)
-4. [API Key and ID](#api-key-and-id)
-5. [License](#license)
+4. [Working with RatelimitManagers](#working-with-ratelimitmanagers)
+5. [API Key and ID](#api-key-and-id)
+6. [License](#license)
 
 ## Creating the DblEu Object
 To use the library, you must first create the `DblEu.Builder()` object.
@@ -107,10 +108,10 @@ public static void printVotes(DblEu api) {
 }
 ```
 
-## Checking ratelimits
-You can work with a Ratelimtmanager to prevent temporary bans
+## Working with RatelimitManagers
+You can work with a RatelimtManager to prevent temporary bans
 
-## Catching Exceptions
+### Catching Exceptions
 ```java
 @Override
 public void onReady(ReadyEvent event) {
@@ -127,7 +128,7 @@ public void onReady(ReadyEvent event) {
 }
 ```
 
-## Using the Throwable of the `.queue()`
+### Using the Throwable of the `.queue()`
 ```java
 @Override
 public void onReady(ReadyEvent event) {
@@ -144,7 +145,7 @@ public void onReady(ReadyEvent event) {
 }
 ```
 
-## Using the manager
+### Using the manager
 ```java
 @Override
 public void onReady(ReadyEvent event) {
