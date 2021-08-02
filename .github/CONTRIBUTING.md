@@ -25,4 +25,4 @@ Based on the current `development` changes!
       
 4. Only open Pull Requests to feature/experimental/development
  
-<!-- This file is copied and edited from https://github.com/dv8fromtheworld/jda -->
+**Notice:** _This file is copied (and edited) from [JDA](https://github.com/dv8fromtheworld/jda)_
