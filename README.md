@@ -94,6 +94,7 @@ DblEu api = new DblEu.Builder()
 
 ## Fetching votes
 You can also fetch all current votes
+
 **Example**
 ```java
 public static void printVotes(DblEu api) {
