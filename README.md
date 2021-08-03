@@ -30,20 +30,20 @@ DblEu-java is the official Java library of discord-botlist.eu
 6. [License](#license)
 
 ## Creating the DblEu Object
-To use the library, you must first create the `DblEu.Builder()` object.
+To use the library, you must create the `DblEu.Builder()` object first.
 The API requires an API Key and an id
 > See [API Key and ID](#api-key-and-id)
 
 **Example**
 ````java
 DblEu api = new DblEu.Builder()
-        .setAPIKey("key") //Setting the API Keys
-        .setId("id") //Setting the client id
+        .setAPIKey("key") //Set the API Keys
+        .setId("id") //Set the client id
         .build(); //Build the object
 ````
 
 ## Listening to events
-You can catch events by overwriting their function
+You can catch events to work even better with the API
 
 **Example**
 ````java
@@ -52,14 +52,13 @@ public class DblEuEvents extends DblEuListerns { //Extend all event listeners fr
     //Ready event
     @Override
     public void onReady(ReadyEvent event) {
-        event.printInfo(); //Printing ready information
         System.out.println("Version of Library: " + event.getDblEu().version()); //Printing the Library-Version
     }
     
 }
 ````
 
-You can also use two event listeners. Just set overwrite another function
+You can catch multiple events in one class
 
 **Example**
 ````java
@@ -68,7 +67,6 @@ public class DblEuEvents extends DblEuListerns { //Extend all event listeners fr
     //Ready event
     @Override
     public void onReady(ReadyEvent event) {
-        event.printInfo(); //Printing ready information
         System.out.println("Version of Library: " + event.getDblEu().version()); //Printing the Library-Version
     }
 
@@ -82,13 +80,13 @@ public class DblEuEvents extends DblEuListerns { //Extend all event listeners fr
 ````
 
 **Note**<br>
-You need to register all of these events when before you create the `DblEu.Builder()` object.
+You need to register all of these listeners before you build the `DblEu` object.
 
 **Example**
 ````java
 DblEu api = new DblEu.Builder()
-        .setAPIKey("key") //Setting the API Keys
-        .setId("id") //Setting the client id
+        .setAPIKey("key") //Set the API Keys
+        .setId("id") //Set the client id
         .addEventListener(new DblEuEvents()) //Add the readyevent listener
         .addEventListener(new DblEuEvents()) //Add the voteevent listener
         .build(); //Build the object
@@ -96,6 +94,7 @@ DblEu api = new DblEu.Builder()
 > See [Creating the DblEu-Object](#creating-the-dbleu-object)
 
 ## Post data
+You can post data which will be shown on your bots page.
 ```java
 DblEu api = ...;
 PostData postData = new DataBuilder()
