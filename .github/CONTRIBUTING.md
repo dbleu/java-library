@@ -9,7 +9,7 @@ Based on the current `development` changes!
 1. Adding a new Method or Class
     - If your addition is not internal (e.g. an impl class or private method) you have to write documentation.
     - Keep your code consistent!
-        - Compare your code style to the one used all over Korewana and ensure you
+        - Compare your code style to the one used all over DblEu and ensure you
           do not break the consistency
     - Do not remove existing functionality, use deprecation instead.
 
@@ -23,6 +23,6 @@ Based on the current `development` changes!
       (See [Syncing a Fork](https://help.github.com/articles/syncing-a-fork/)
       or [Keeping a Fork Updated](https://robots.thoughtbot.com/keeping-a-github-fork-updated))
       
-4. Only open Pull Requests to feature/experimental/development
+4. Only open Pull Requests to `development`
  
 **Notice:** _This file is copied (and edited) from [JDA](https://github.com/dv8fromtheworld/jda)_
