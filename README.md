@@ -206,6 +206,18 @@ If you want to catch votes with our webhook implementation, you need to follow t
       ```
       > See [Creating the DblEu-Object](#creating-the-dbleu-object)
 
+#### Extra
+You can change the url for the webhook with `.setWebhookPath()`
+**Example:**
+```java
+DblEu api = new DblEu.Builder()
+   .setAPIKey("key") //Setting the API Keys
+   .setId("id") //Setting the client id
+   .enableWebhooks(true) //enable webhooks
+   .setWebhookPath("/hook") //set webhook path
+   .build(); //Build the object
+```
+> See [Creating the DblEu-Object](#creating-the-dbleu-object)
 ### Using your own webserver
 If you want to use your own webserver, you can simulate a VoteEvent
 
