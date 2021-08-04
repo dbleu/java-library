@@ -208,6 +208,7 @@ If you want to catch votes with our webhook implementation, you need to follow t
 
 #### Extra
 You can change the url for the webhook with `.setWebhookPath()`
+
 **Example:**
 ```java
 DblEu api = new DblEu.Builder()
