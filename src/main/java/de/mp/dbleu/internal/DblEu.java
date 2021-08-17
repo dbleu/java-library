@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 
 public interface DblEu {
 
     String version();
+    CompletionStage<Void> postData(int servers) throws IOException;
+    RatelimitManager getRatelimitManager();
 
     class Builder {
 

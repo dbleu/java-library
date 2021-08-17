@@ -11,11 +11,17 @@ package de.mp.dbleu.internal;
 
 import de.mp.dbleu.internal.events.ReadyEvent;
 import de.mp.dbleu.internal.events.VoteEvent;
+import okhttp3.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 public class DblEuImpl implements DblEu {
 
@@ -23,30 +29,35 @@ public class DblEuImpl implements DblEu {
     private final String VERSION = "1.0.0";
     private final String apiKey;
     private final long botId;
+    private final RatelimitManager ratelimitManager;
     private final List<Object> listeners;
+    private final OkHttpClient httpClient;
+    public static final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+    private static final HttpUrl baseUrl = new HttpUrl.Builder()
+            .scheme("https")
+            .host("api.discord-botlist.eu")
+            .addPathSegment("v1")
+            .build();
 
     public DblEuImpl(String apiKey, long botId, List<Object> listeners) throws ClassNotFoundException, IOException {
         this.apiKey = apiKey;
         this.botId = botId;
         this.listeners = listeners;
+        this.httpClient = new OkHttpClient.Builder().build();
+        this.ratelimitManager = new RatelimitManager();
         checkIdentity();
         callEvent(new ReadyEvent(null));
     }
 
-    @Deprecated
     private void checkIdentity() throws IOException {
-        URL url = new URL(this.BASE_URL+"/v1/ping");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-
-        con.setRequestProperty("Authorization", "Bearer "+this.apiKey);
-
-        con.setConnectTimeout(5000);
-        con.setReadTimeout(5000);
-
-        con.setInstanceFollowRedirects(false);
-
-        int status = con.getResponseCode();
+        try {
+            Response response = execute("/ping");
+            JSONObject json = new JSONObject(Objects.requireNonNull(response.body()).string());
+            this.ratelimitManager.addRequest("ping");
+            if(this.botId != Long.parseLong(String.valueOf(((JSONObject) json.get("discord")).get("id")))) throw new IllegalArgumentException("Invalid id");
+        } catch(JSONException jsonException) {
+            throw new IllegalArgumentException("Invalid token");
+        }
     }
 
     private void callEvent(Object obj) throws ClassNotFoundException {
@@ -57,8 +68,41 @@ public class DblEuImpl implements DblEu {
         }
     }
 
+    private Response execute(String s) throws IOException {
+        Map<String, String> headersMap = new HashMap<>();
+        headersMap.put("Authorization", "Bearer "+this.apiKey);
+
+        Headers headers = Headers.of(headersMap);
+        Request request = new Request.Builder().url(this.BASE_URL+"/v1/"+s).headers(headers).build();
+
+        return this.httpClient.newCall(request).execute();
+    }
+
     @Override
     public String version() {
         return this.VERSION;
+    }
+
+    @Override
+    public CompletionStage<Void> postData(int servers) throws IOException {
+        if(this.ratelimitManager.postData().getAvailableRequests() == 0) {
+            System.err.println("[RatelimitManager]: Ratelimit reached");
+            return null;
+        }
+        Map<String, String> headersMap = new HashMap<>();
+        headersMap.put("Authorization", "Bearer "+this.apiKey);
+
+        Headers headers = Headers.of(headersMap);
+        Request request = new Request.Builder().url(this.BASE_URL+"/v1/update").method("POST", RequestBody.create(mediaType, "{\"serverCount\": "+servers+"}")).headers(headers).build();
+
+        this.ratelimitManager.addRequest("post");
+
+        this.httpClient.newCall(request).execute();
+        return new CompletableFuture<>();
+    }
+
+    @Override
+    public RatelimitManager getRatelimitManager() {
+        return null;
     }
 }

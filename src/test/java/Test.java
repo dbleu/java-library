@@ -18,10 +18,13 @@ public class Test extends ListenerAdapter {
 
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         DblEu api = new DblEu.Builder()
-                .setAPIKey("API KEY")
+                .setAPIKey("TOKEN")
                 .setId(819303604820639785L)
                 .addEventListeners(new Test())
                 .build();
+
+        api.postData(77);
+
     }
 
     @Override

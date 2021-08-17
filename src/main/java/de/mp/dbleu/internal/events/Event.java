@@ -11,6 +11,8 @@ package de.mp.dbleu.internal.events;
 
 import de.mp.dbleu.internal.DblEu;
 
+import java.util.concurrent.CompletionStage;
+
 public interface Event {
 
     DblEu getDblEu();
