@@ -23,14 +23,16 @@ public class Test extends ListenerAdapter {
                 .addEventListeners(new Test())
                 .build();
 
-        api.postData(77);
+        api.simulateEvent(VoteEvent.class).whenComplete((event, err) -> {
+            if(err != null) err.printStackTrace();
+            System.out.println(event.getDblEu().version());
+        });
 
     }
 
     @Override
     public void onReady(ReadyEvent event) {
         System.out.println("Ready!");
-        System.out.println(event.getDblEu());
     }
 
     @Override

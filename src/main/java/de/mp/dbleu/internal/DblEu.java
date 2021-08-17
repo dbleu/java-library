@@ -1,5 +1,7 @@
 package de.mp.dbleu.internal;
 
+import de.mp.dbleu.internal.events.Event;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -10,7 +12,9 @@ public interface DblEu {
 
     String version();
     CompletionStage<Void> postData(int servers) throws IOException;
+    <T> CompletionStage<Event> simulateEvent(Class<T> clazz) throws ClassNotFoundException;
     RatelimitManager getRatelimitManager();
+
 
     class Builder {
 

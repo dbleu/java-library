@@ -9,6 +9,7 @@
 
 package de.mp.dbleu.internal;
 
+import de.mp.dbleu.internal.events.Event;
 import de.mp.dbleu.internal.events.ReadyEvent;
 import de.mp.dbleu.internal.events.VoteEvent;
 import okhttp3.*;
@@ -102,7 +103,20 @@ public class DblEuImpl implements DblEu {
     }
 
     @Override
+    public <T> CompletionStage<Event> simulateEvent(Class<T> clazz) throws ClassNotFoundException {
+        final CompletableFuture<Event> future = new CompletableFuture<>();
+        Class<?> readyEventClass = Class.forName("de.mp.dbleu.internal.events.ReadyEvent");
+        Class<?> voteEventClass = Class.forName("de.mp.dbleu.internal.events.VoteEvent");
+        if(clazz == readyEventClass) {
+            future.complete(new ReadyEvent(this));
+        } else if(clazz == voteEventClass) {
+            future.complete(new VoteEvent(this));
+        }
+        return future;
+    }
+
+    @Override
     public RatelimitManager getRatelimitManager() {
-        return null;
+        return this.ratelimitManager;
     }
 }
