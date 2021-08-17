@@ -10,8 +10,11 @@
 package de.mp.dbleu.internal;
 
 import de.mp.dbleu.internal.events.ReadyEvent;
+import de.mp.dbleu.internal.events.VoteEvent;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class DblEuImpl implements DblEu {
@@ -26,12 +29,31 @@ public class DblEuImpl implements DblEu {
         this.apiKey = apiKey;
         this.botId = botId;
         this.listeners = listeners;
+        checkIdentity();
         callEvent(new ReadyEvent(null));
     }
 
+    @Deprecated
+    private void checkIdentity() throws IOException {
+        URL url = new URL(this.BASE_URL+"/v1/ping");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+
+        con.setRequestProperty("Authorization", "Bearer "+this.apiKey);
+
+        con.setConnectTimeout(5000);
+        con.setReadTimeout(5000);
+
+        con.setInstanceFollowRedirects(false);
+
+        int status = con.getResponseCode();
+    }
+
     private void callEvent(Object obj) throws ClassNotFoundException {
-        if(obj.getClass() == Class.forName("de.mp.dbleu.internal.events.ReadyEvent")) {
+        if (Class.forName("de.mp.dbleu.internal.events.ReadyEvent").equals(obj.getClass())) {
             listeners.forEach(listener -> ((ListenerAdapter) listener).onReady(new ReadyEvent(this)));
+        } else if (Class.forName("de.mp.dbleu.internal.events.VoteEvent").equals(obj.getClass())) {
+            listeners.forEach(listener -> ((ListenerAdapter) listener).onVote(new VoteEvent(this)));
         }
     }
 

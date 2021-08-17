@@ -10,11 +10,11 @@
 package de.mp.dbleu.internal;
 
 import de.mp.dbleu.internal.events.ReadyEvent;
+import de.mp.dbleu.internal.events.VoteEvent;
 
 public abstract class ListenerAdapter {
 
-    public void onReady(ReadyEvent event) {
-
-    }
+    public void onReady(ReadyEvent event) {}
+    public void onVote(VoteEvent event) {}
 
 }

@@ -10,6 +10,7 @@
 import de.mp.dbleu.internal.DblEu;
 import de.mp.dbleu.internal.ListenerAdapter;
 import de.mp.dbleu.internal.events.ReadyEvent;
+import de.mp.dbleu.internal.events.VoteEvent;
 
 import java.io.IOException;
 
@@ -27,5 +28,10 @@ public class Test extends ListenerAdapter {
     public void onReady(ReadyEvent event) {
         System.out.println("Ready!");
         System.out.println(event.getDblEu());
+    }
+
+    @Override
+    public void onVote(VoteEvent event) {
+        System.out.println("Received a vote");
     }
 }
