@@ -1,4 +1,4 @@
-### ⚠️ Pull requests will all get rejected at the moment!
+### Not everything is working at the moment. Ask on the discord-botlist.eu Server if you have any questions
 
 [discord-invite]: https://discord.gg/2Pang7t9vr
 [license]: https://github.com/MauricePascal/DblEu-java/blob/main/LICENSE
