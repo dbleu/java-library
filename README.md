@@ -87,8 +87,7 @@ You need to register all of these listeners before you build the `DblEu` object.
 DblEu api = new DblEu.Builder()
         .setAPIKey("key") //Set the API Keys
         .setId("id") //Set the client id
-        .addEventListener(new DblEuEvents()) //Add the readyevent listener
-        .addEventListener(new DblEuEvents()) //Add the voteevent listener
+        .addEventListener(new DblEuEvents()) //Add an event listener
         .build(); //Build the object
 ````
 > See [Creating the DblEu-Object](#creating-the-dbleu-object)
